@@ -1,32 +1,198 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوة زفاف محمد ورقية</title>
+
 <style>
-.facebook-button {
-  display: block;
-  width: 100%;
-  max-width: 300px;
-  margin: 25px auto;
-  padding: 15px;
-  background: #1877f2;
-  color: #ffffff;
-  text-decoration: none;
-  text-align: center;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 25px 15px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: Tahoma, Arial, sans-serif;
+  background: linear-gradient(135deg, #dff5ff, #a8dcf5, #eaf9ff);
+  color: #25465d;
+}
+
+.invitation {
+  width: 100%;
+  max-width: 520px;
+  padding: 35px 22px;
+  text-align: center;
+  background: rgba(255,255,255,0.92);
+  border: 2px solid #8cc9e8;
+  border-radius: 25px;
+  box-shadow: 0 12px 35px rgba(40,100,130,0.18);
+}
+
+.small-title {
+  color: #568eae;
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  color: #287da8;
+  font-size: 29px;
+  margin: 12px 0;
+}
+
+.names {
+  font-size: 35px;
+  font-weight: bold;
+  color: #246b91;
+  margin: 25px 0;
+}
+
+.message {
+  line-height: 2;
+  font-size: 17px;
+  margin: 20px 0;
+}
+
+.details {
+  background: #e9f7ff;
+  border-radius: 15px;
+  padding: 18px;
+  margin: 22px 0;
+  line-height: 2.2;
+  font-size: 17px;
+}
+
+.countdown {
+  color: #287da8;
+  font-size: 19px;
+  font-weight: bold;
+  margin: 22px 0;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.buttons a {
+  display: block;
+  text-decoration: none;
+  padding: 14px;
+  border-radius: 12px;
+  color: white;
   font-size: 17px;
   font-weight: bold;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px #0004;
-  transition: 0.3s;
 }
 
-.facebook-button:hover {
-  background: #145dbf;
-  transform: translateY(-2px);
+.whatsapp {
+  background: #25a85a;
+}
+
+.facebook {
+  background: #1877f2;
+}
+
+.footer {
+  margin-top: 25px;
+  color: #7296aa;
+  font-size: 13px;
 }
 </style>
+</head>
 
-<a class="facebook-button"
-   href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fghssan929-dev.github.io%2Fwedding-invitation%2F"
-   target="_blank"
-   rel="noopener noreferrer">
-  f　 مشاركة الدعوة عبر فيسبوك
-</a>
+<body>
+
+<div class="invitation">
+
+  <div class="small-title">بكل المحبة والتقدير</div>
+
+  <h1>دعوة لحضور حفل زفاف</h1>
+
+  <div class="names">محمد ورقية</div>
+
+  <div class="message">
+    يسرّنا دعوتكم لمشاركتنا فرحة العمر،
+    وحضور هذه المناسبة السعيدة.
+    حضوركم يزيد فرحتنا بهجة وسروراً.
+  </div>
+
+  <div class="details">
+    <div>📅 الجمعة 27 نوفمبر 2026</div>
+    <div>🕓 الساعة الرابعة مساءً</div>
+    <div>📍 حي الجنينة – سنار</div>
+  </div>
+
+  <div class="countdown" id="countdown">
+    ننتظركم بكل الشوق ❤️
+  </div>
+
+  <div class="buttons">
+
+    <a class="whatsapp" id="whatsapp"
+       href="#" target="_blank">
+       مشاركة عبر واتساب
+    </a>
+
+    <a class="facebook" id="facebook"
+       href="#" target="_blank">
+       مشاركة عبر فيسبوك
+    </a>
+
+  </div>
+
+  <div class="footer">
+    فرحتنا تكتمل بحضوركم ❤️
+  </div>
+
+</div>
+
+<script>
+const invitationText =
+"دعوة لحضور حفل زفاف محمد ورقية يوم الجمعة 27 نوفمبر 2026، الساعة الرابعة مساءً، حي الجنينة – سنار.";
+
+const pageURL = window.location.href;
+
+document.getElementById("whatsapp").href =
+"https://wa.me/?text=" +
+encodeURIComponent(invitationText + " " + pageURL);
+
+document.getElementById("facebook").href =
+"https://www.facebook.com/sharer/sharer.php?u=" +
+encodeURIComponent(pageURL);
+
+function updateCountdown() {
+  const weddingDate = new Date("2026-11-27T16:00:00+02:00");
+  const now = new Date();
+  const difference = weddingDate - now;
+
+  const display = document.getElementById("countdown");
+
+  if (difference <= 0) {
+    display.textContent = "أهلاً بكم في فرحتنا ❤️";
+    return;
+  }
+
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (difference / (1000 * 60 * 60)) % 24
+  );
+
+  display.textContent =
+    "باقي على فرحتنا " + days +
+    " يوم و " + hours + " ساعة ❤️";
+}
+
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
+
+</body>
+</html>
