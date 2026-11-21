@@ -28,7 +28,7 @@ body {
   max-width: 520px;
   padding: 35px 22px;
   text-align: center;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.95);
   border: 2px solid #8cc9e8;
   border-radius: 25px;
   box-shadow: 0 12px 35px rgba(40,100,130,0.18);
@@ -68,11 +68,40 @@ h1 {
   font-size: 17px;
 }
 
-.countdown {
+.countdown-title {
   color: #287da8;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: bold;
-  margin: 22px 0;
+  margin: 25px 0 15px;
+}
+
+.timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 15px 0 25px;
+}
+
+.timer-box {
+  background: #e9f7ff;
+  border: 1px solid #b8e0f3;
+  border-radius: 12px;
+  padding: 12px 3px;
+}
+
+.timer-number {
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+  color: #287da8;
+  direction: ltr;
+}
+
+.timer-label {
+  display: block;
+  font-size: 12px;
+  color: #568eae;
+  margin-top: 7px;
 }
 
 .buttons {
@@ -85,7 +114,7 @@ h1 {
 .buttons a {
   display: block;
   text-decoration: none;
-  padding: 14px;
+  padding: 17px;
   border-radius: 12px;
   color: white;
   font-size: 17px;
@@ -103,7 +132,17 @@ h1 {
 .footer {
   margin-top: 25px;
   color: #7296aa;
-  font-size: 13px;
+  font-size: 14px;
+}
+
+@media (max-width: 360px) {
+  .timer-number {
+    font-size: 21px;
+  }
+
+  .timer-label {
+    font-size: 10px;
+  }
 }
 </style>
 </head>
@@ -130,8 +169,32 @@ h1 {
     <div>📍 حي الجنينة – سنار</div>
   </div>
 
-  <div class="countdown" id="countdown">
-    ننتظركم بكل الشوق ❤️
+  <div class="countdown-title" id="countdownTitle">
+    باقي على فرحتنا ❤️
+  </div>
+
+  <div class="timer" id="timer">
+
+    <div class="timer-box">
+      <span class="timer-number" id="days">00</span>
+      <span class="timer-label">يوم</span>
+    </div>
+
+    <div class="timer-box">
+      <span class="timer-number" id="hours">00</span>
+      <span class="timer-label">ساعة</span>
+    </div>
+
+    <div class="timer-box">
+      <span class="timer-number" id="minutes">00</span>
+      <span class="timer-label">دقيقة</span>
+    </div>
+
+    <div class="timer-box">
+      <span class="timer-number" id="seconds">00</span>
+      <span class="timer-label">ثانية</span>
+    </div>
+
   </div>
 
   <div class="buttons">
@@ -155,6 +218,7 @@ h1 {
 </div>
 
 <script>
+
 const invitationText =
 "دعوة لحضور حفل زفاف محمد ورقية يوم الجمعة 27 نوفمبر 2026، الساعة الرابعة مساءً، حي الجنينة – سنار.";
 
@@ -169,29 +233,57 @@ document.getElementById("facebook").href =
 encodeURIComponent(pageURL);
 
 function updateCountdown() {
-  const weddingDate = new Date("2026-11-27T16:00:00+02:00");
-  const now = new Date();
+
+  const weddingDate =
+    new Date("2026-11-27T16:00:00+02:00").getTime();
+
+  const now = new Date().getTime();
+
   const difference = weddingDate - now;
 
-  const display = document.getElementById("countdown");
-
   if (difference <= 0) {
-    display.textContent = "أهلاً بكم في فرحتنا ❤️";
+
+    document.getElementById("countdownTitle").textContent =
+      "أهلاً بكم في فرحتنا ❤️";
+
+    document.getElementById("timer").style.display = "none";
+
     return;
   }
 
-  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const days = Math.floor(
+    difference / (1000 * 60 * 60 * 24)
+  );
+
   const hours = Math.floor(
     (difference / (1000 * 60 * 60)) % 24
   );
 
-  display.textContent =
-    "باقي على فرحتنا " + days +
-    " يوم و " + hours + " ساعة ❤️";
+  const minutes = Math.floor(
+    (difference / (1000 * 60)) % 60
+  );
+
+  const seconds = Math.floor(
+    (difference / 1000) % 60
+  );
+
+  document.getElementById("days").textContent =
+    String(days).padStart(2, "0");
+
+  document.getElementById("hours").textContent =
+    String(hours).padStart(2, "0");
+
+  document.getElementById("minutes").textContent =
+    String(minutes).padStart(2, "0");
+
+  document.getElementById("seconds").textContent =
+    String(seconds).padStart(2, "0");
 }
 
 updateCountdown();
-setInterval(updateCountdown, 60000);
+
+setInterval(updateCountdown, 1000);
+
 </script>
 
 </body>
